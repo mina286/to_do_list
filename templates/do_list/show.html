@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+{%load static%}
+{% load crispy_forms_tags %}
+{% block content%}
+{% include 'partials/_alert.html' %}
+<div class=" text-center mr-auto">
+    <div></div>
+    <div>{{mission.name}}</div>
+    <div>{{mission.time_mission}}</div> 
+    <div>{{mission.day_mission}}</div>
+    <div>{{mission.finish_mission}}</div>
+</div>
+{% endblock content%}

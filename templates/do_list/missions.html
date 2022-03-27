@@ -1,0 +1,82 @@
+{% extends 'base.html'%}
+{%load static%}
+{% load crispy_forms_tags %}
+{% block content%}
+{% include 'partials/_alert.html' %}
+<div class=" text-center mr-auto">
+
+<form method="get" class="d-flex justify-content-center">
+    <div class="col-md-6">
+      
+        <div class="form-group">
+            {{ list_missionforms.name|as_crispy_field }}
+           
+            
+
+        </div>
+
+        <div class="form-group">
+            {{ list_missionforms.time_mission|as_crispy_field }}
+        </div>
+
+        <div class="form-group">
+            {{ list_missionforms.day_mission|as_crispy_field }}
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1"> {{ list_missionforms.finish_mission.label }}</label>
+            {{ list_missionforms.finish_mission}}
+        </div>
+        <button type="submit" name="btn_addd" class="btn btn-success btn_add">اضف مهمه</button>
+
+    </div>
+
+  </form>
+</div>  
+
+
+<div class="flex-row justify-content-center ml-5 mt-5">
+    {% for mission in missions %}
+    <div class="alert alert-success alert-dismissible fade show mt-1 " style="padding-right:0px; box-sizing:border-box"  style="width: 70%; margin-left: 11%;">
+        
+        <strong>mission {{forloop.counter}} </strong >
+
+            <form method="get" style="display:inline" action="{%url 'active_mission'%}">
+                    <input type="checkbox" name="ch" class="checkbox_mission" 
+                    {% if mission.finish_mission == True %}
+                    checked
+                    {% endif %}
+                    style="clear: both;" onChange="submit()">
+
+                
+                <input type="hidden" name="id_miss" value="{{mission.id}}" >
+                <input type="hidden" name="fromch" value="fromch" >
+
+                
+
+            </form>
+
+            {% if mission.finish_mission == True%}
+    
+            <a class="nav-link" href="{%url 'show' mission.id%}" style="text-decoration: line-through; clear: both; display: inline;">
+                {{mission|title}}.
+            </a>
+            {%else%}
+            <span class="text-center inline-block ml-5"  >
+                <a class="nav-link" href="{%url 'show' mission.id%}" style="text-decoration: none; clear: both; display: inline;">
+                    {{mission|title}}.
+                </a>
+
+            </span>
+            {% endif %}
+        <button type="button" class="btn " style="float: right; margin-top: -8px;clear: both">
+         <a href="{% url 'del_mission' mission.id %}" class="text-decoration-none"><span aria-hidden="true" style="font-size: 20px;">&times;</span></a> 
+        </button>
+      </div>
+    {%endfor%}
+    
+      
+
+
+</div>
+{% endblock content%}
